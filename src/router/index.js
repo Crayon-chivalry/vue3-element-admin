@@ -1,19 +1,25 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+
+/**
+ * 路由字段
+ */
+// 当设置 true 的时候该路由不会出现在侧边栏，如401、login等
+// hidden: false
+
+// 设置为 true, 显示根路由
+// alwaysShow: true
+
+// 设置 true 则不会被 <keep-alive> 缓存
+// meta.noCache: true
+
+// 设置 true, 则会固定在 tags-view 中
+// affix: true
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/login/index.vue')
   }
 ]
 
