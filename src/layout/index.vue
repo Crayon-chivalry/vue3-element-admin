@@ -6,12 +6,12 @@
 
     <el-container>
       <el-header class="header">
-        <!-- <navbar/>
-        <tags-view/> -->
+        <navbar/>
+        <tags-view/>
       </el-header>
 
       <el-main class="main">
-        <!-- <app-main></app-main> -->
+        <app-main></app-main>
       </el-main>
     </el-container>
   </el-container>
@@ -19,6 +19,9 @@
 
 <script setup>
 import Sidebar from './components/Sidebar/index.vue'
+import Navbar from "./components/Navbar.vue";
+import TagsView from "./components/TagsView/index.vue";
+import AppMain from "./components/AppMain.vue";
 </script>
 
 <style scoped>

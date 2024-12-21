@@ -37,7 +37,7 @@ Mock.mock('/api/userInfo', 'get', (req) => {
               meta: {
                 title: "首页",
                 affix: true,
-                icon: "House"
+                icon: "house"
               }
             }
           ]
