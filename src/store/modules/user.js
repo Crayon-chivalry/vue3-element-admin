@@ -1,4 +1,4 @@
-import { login, getUserInfo } from "@/api/user";
+import { loginAPI, getUserInfoAPI } from "@/api/user";
 import md5 from 'blueimp-md5'
 
 const state = {
@@ -23,12 +23,12 @@ const mutations = {
 const actions = {
   async login({ commit }, form) {
     let  _password = md5(form.password)
-    let { data } = await login(form.userid, _password)
+    let { data } = await loginAPI(form.userid, _password)
     commit('setToken', data?.token)
     return data
   },
   async getInfo({ commit }) {
-    let { data: { data } } = await getUserInfo()
+    let { data: { data } } = await getUserInfoAPI()
     commit('setRoles', data.permission)
     return data.permission
   },

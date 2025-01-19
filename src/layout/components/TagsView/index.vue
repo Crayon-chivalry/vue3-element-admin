@@ -126,9 +126,10 @@ const closeMenu = () => {
 .tags {
   height: 34px;
   display: flex;
+  align-items: center;
   box-sizing: border-box;
   background-color: #fff;
-  border-bottom: 1px solid #d8dce5;
+  /* border-bottom: 1px solid #d8dce5; */
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
 }
@@ -144,7 +145,7 @@ const closeMenu = () => {
   color: #495060;
   background: #fff;
   padding: 0 8px;
-  margin: 4px 5px 0;
+  margin: 0 5px;
   text-decoration: none;
   border-radius: 4px;
 }

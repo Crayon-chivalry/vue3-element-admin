@@ -1,7 +1,7 @@
 import { request } from "@/utils/request";
 
 // 登录
-export function login(userid, password) {
+export function loginAPI(userid, password) {
   return request({
     method: 'post',
     url: '/login',
@@ -12,7 +12,7 @@ export function login(userid, password) {
   })
 }
 
-export function getUserInfo() {
+export function getUserInfoAPI() {
   return request({
     url: '/userInfo'
   })
