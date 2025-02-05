@@ -12,8 +12,21 @@ export function loginAPI(userid, password) {
   })
 }
 
+// 后台管理员用户信息
 export function getUserInfoAPI() {
   return request({
     url: '/userInfo'
+  })
+}
+
+// 用户列表
+export function getUserListAPI(page, pageSize, filters) {
+  return request({
+    url: '/userList',
+    data: {
+      page,
+      pageSize,
+      filters
+    }
   })
 }

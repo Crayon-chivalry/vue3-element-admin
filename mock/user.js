@@ -1,5 +1,9 @@
 import Mock from 'mockjs'
 
+import { dynamicFilter } from './utils/index'
+
+import permission from './data/permission.json'
+
 // 登录
 Mock.mock('/api/login', 'post', (req) => {
   const { userid, password } = JSON.parse(req.body)
@@ -17,77 +21,44 @@ Mock.mock('/api/login', 'post', (req) => {
   }
 })
 
-// 用户信息
-Mock.mock('/api/userInfo', 'get', (req) => {
+// 后台信息 / 菜单 / 权限
+Mock.mock('/api/userInfo', 'get', () => {
   return {
     code: 200,
     message: '获取成功',
     data: {
       name: "admin",
-      permission: [
-        {
-          path: "/",
-          component: "Layout",
-          redirect: "/dashboard",
-          children: [
-            {
-              name: "dashboard",
-              path: "dashboard",
-              component: "dashboard/index",
-              meta: {
-                title: "首页",
-                affix: true,
-                icon: "house"
-              }
-            }
-          ]
-        },
-        {
-          path: "/user",
-          component: "Layout",
-          meta: {
-            title: "用户管理",
-            icon: "user"
-          },
-          children: [
-            {
-              name: "user",
-              path: "index",
-              component: "user/index",
-              meta: {
-                title: "用户列表",
-                icon: "user"
-              }
-            }
-          ]
-        },
-        {
-          path: "/shop",
-          component: "Layout",
-          meta: {
-            title: "商城管理",
-            icon: "shop"
-          },
-          children: [
-            {
-              name: "shop",
-              path: "index",
-              component: "shop/index",
-              meta: {
-                title: "商品列表",
-              }
-            },
-            {
-              name: "shop-order",
-              path: "shop-order",
-              component: "shop/shopOrder",
-              meta: {
-                title: "订单列表",
-              }
-            }
-          ]
-        },
-      ]
+      permission
     }
+  }
+})
+
+// 用户列表
+const data = Mock.mock({
+  'list|14': [{
+    tx: '',
+    userid: '@word(4, 6)',
+    name: '@cname',
+    phone: /^1[3-9]\d{9}$/,
+    state: '@integer(1, 2)'
+  }]
+})
+Mock.mock('/api/userList', 'get', (req) => {
+  // 从请求参数中获取分页信息
+  const { page = 1, pageSize = 10, filters = {} } = JSON.parse(req.body)
+  // 计算起始索引和结束索引
+  const start = (page - 1) * pageSize;
+  const end = page * pageSize;
+  // 筛选数据
+  const list = dynamicFilter(data.list, filters)
+  // 获取当前页的数据
+  const currentPageData = list.slice(start, end);
+  return {
+    code: 200,
+    message: '获取成功',
+    total: list.length, // 总数据量
+    page, // 当前页码
+    pageSize, // 每页数据量
+    data: currentPageData
   }
 })

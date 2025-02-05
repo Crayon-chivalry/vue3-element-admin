@@ -1,10 +1,13 @@
 <template>
   <div>
-    <table-filtering :formList="formList" />
+    <!-- 筛选 -->
+    <table-filtering :filterList="filterList" @search="search" />
 
     <div class="m-block">
+      <!-- 操作区 -->
       <el-button type="danger">删除</el-button>
 
+      <!-- 表格 -->
       <el-table
         :data="tableData"
         table-layout="auto"
@@ -30,31 +33,26 @@
           <el-button type="primary" link>编辑</el-button>
         </el-table-column>
       </el-table>
+
+      <!-- 分页 -->
+      <div class="pagination">
+        <el-pagination 
+          background layout="total, prev, pager, next, sizes" 
+          :page-sizes="[10, 20, 30, 40]" 
+          :total="total"
+          @change="change"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { getUserListAPI } from '@/api/user'
 
-const tableData = [
-  {
-    tx: "",
-    userid: "123",
-    name: "王五",
-    phone: "14152526363",
-    state: 1,
-  },
-  {
-    tx: "",
-    userid: "lisi",
-    name: "李四",
-    phone: "17252556250",
-    state: 2,
-  },
-];
-
-const formList = [
+// 筛选配置
+const filterList = [
   {
     label: "用户名",
     key: "userid",
@@ -86,19 +84,57 @@ const formList = [
       { label: "正常", value: 1 },
       { label: "冻结", value: 2 },
     ],
-  },
+  }
 ];
 
-let selectList = ref([]);
+let tableData = ref([])
+let selectList = ref([])
 
+let page = ref(1)
+let pageSize = ref(10)
+let total = ref(0)
+
+let filters = ref({})
+
+// 获取用户列表
+const getUserList = async () => {
+  let { data } = await getUserListAPI(page.value, pageSize.value, filters.value)
+  tableData.value = data.data
+  total.value = data.total
+}
+
+// 处理表格选中项变化
 const handleSelectionChange = (e) => {
   selectList.value = e;
 };
+
+// 页码 / 页码大小 变化
+const change = (current, size) => {
+  page.value = current
+  pageSize.value = size
+  getUserList()
+}
+
+// 筛选
+const search = (filter) => {
+  filters.value = filter
+  getUserList()
+}
+
+onMounted(() => {
+  getUserList()
+})
 </script>
 
 <style scoped>
 .tx-icon {
   width: 40px;
   height: 40px;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }
 </style>

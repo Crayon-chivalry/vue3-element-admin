@@ -23,6 +23,15 @@
               :value="optionsItem.value"
             />
           </el-select>
+          <!-- 日期 -->
+          <el-date-picker
+            v-model="item.value"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            v-if="item.type == 'date'"
+          />
         </div>
       </el-col>
       <el-col :md="8">
@@ -37,20 +46,32 @@
 
 <script setup>
 import { ref } from 'vue';
+import { formatDate } from '@/utils'
 
-const props = defineProps(["formList"]);
+const props = defineProps(["filterList"]);
 
-let list = ref(props.formList)
+const $emit = defineEmits(['search'])
+
+let list = ref(JSON.parse(JSON.stringify(props.filterList)))
 
 // 搜索
 const search = () => {
-  console.log(list.value)
+  let filter = {}
+  list.value.forEach(item => {
+    // 针对日期处理
+    if(item.type == 'date') {
+      filter[item.key] = [formatDate(item.value[0]), formatDate(item.value[1])]
+    } else {
+      filter[item.key] = item.value
+    }
+  })
+  $emit('search', filter)
 }
 
 // 重置
 const reset = () => {
-  console.log(props.formList)
-  list.value = props.formList
+  list.value = props.filterList
+  $emit('search', {})
 }
 </script> 
 

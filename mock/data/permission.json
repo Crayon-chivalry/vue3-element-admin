@@ -1,0 +1,64 @@
+[
+  {
+    "path": "/",
+    "component": "Layout",
+    "redirect": "/dashboard",
+    "children": [
+      {
+        "name": "dashboard",
+        "path": "dashboard",
+        "component": "dashboard/index",
+        "meta": {
+          "title": "首页",
+          "affix": true,
+          "icon": "house"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/user",
+    "component": "Layout",
+    "meta": {
+      "title": "用户管理",
+      "icon": "user"
+    },
+    "children": [
+      {
+        "name": "user",
+        "path": "index",
+        "component": "user/index",
+        "meta": {
+          "title": "用户列表",
+          "icon": "user"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/shop",
+    "component": "Layout",
+    "meta": {
+      "title": "商城管理",
+      "icon": "shop"
+    },
+    "children": [
+      {
+        "name": "shop",
+        "path": "index",
+        "component": "shop/index",
+        "meta": {
+          "title": "商品列表"
+        }
+      },
+      {
+        "name": "shop-order",
+        "path": "shop-order",
+        "component": "shop/shopOrder",
+        "meta": {
+          "title": "订单列表"
+        }
+      }
+    ]
+  }
+]
