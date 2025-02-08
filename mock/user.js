@@ -36,6 +36,7 @@ Mock.mock('/api/userInfo', 'get', () => {
 // 用户列表
 const data = Mock.mock({
   'list|14': [{
+    id: '@uuid',
     tx: '',
     userid: '@word(4, 6)',
     name: '@cname',

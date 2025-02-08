@@ -18,6 +18,12 @@ body {
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
 }
 
+.m-pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
 .mt-sm {
   margin-top: 10px;
 }

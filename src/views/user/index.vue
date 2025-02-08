@@ -5,7 +5,7 @@
 
     <div class="m-block">
       <!-- 操作区 -->
-      <el-button type="danger">删除</el-button>
+      <el-button type="danger" @click="onDelete">删除</el-button>
 
       <!-- 表格 -->
       <el-table
@@ -35,7 +35,7 @@
       </el-table>
 
       <!-- 分页 -->
-      <div class="pagination">
+      <div class="m-pagination">
         <el-pagination 
           background layout="total, prev, pager, next, sizes" 
           :page-sizes="[10, 20, 30, 40]" 
@@ -78,9 +78,10 @@ const filterList = [
     label: "状态",
     key: "state",
     placeholder: "请选择状态",
-    value: "",
+    value: 0,
     type: "select",
     options: [
+      { label: "全部", value: 0 },
       { label: "正常", value: 1 },
       { label: "冻结", value: 2 },
     ],
@@ -95,13 +96,6 @@ let pageSize = ref(10)
 let total = ref(0)
 
 let filters = ref({})
-
-// 获取用户列表
-const getUserList = async () => {
-  let { data } = await getUserListAPI(page.value, pageSize.value, filters.value)
-  tableData.value = data.data
-  total.value = data.total
-}
 
 // 处理表格选中项变化
 const handleSelectionChange = (e) => {
@@ -121,6 +115,33 @@ const search = (filter) => {
   getUserList()
 }
 
+// 获取用户列表
+const getUserList = async () => {
+  let { data } = await getUserListAPI(page.value, pageSize.value, filters.value)
+  tableData.value = data.data
+  console.log(data)
+  total.value = data.total
+}
+
+// 删除
+const onDelete = () => {
+  if(selectList.value.length == 0) {
+    ElMessage({
+      message: '请选择要删除的用户',
+      type: 'warning',
+    })
+    return
+  }
+  ElMessageBox.confirm(
+    '确认要删除吗？',
+    '提示',
+  ).then(() => {
+
+  }).catch(() => {
+
+  })
+}
+
 onMounted(() => {
   getUserList()
 })
@@ -130,11 +151,5 @@ onMounted(() => {
 .tx-icon {
   width: 40px;
   height: 40px;
-}
-
-.pagination {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
 }
 </style>

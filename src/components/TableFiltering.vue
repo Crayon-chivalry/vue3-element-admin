@@ -59,8 +59,10 @@ const search = () => {
   let filter = {}
   list.value.forEach(item => {
     // 针对日期处理
-    if(item.type == 'date') {
+    if(item.type == 'date' && item.value) {
       filter[item.key] = [formatDate(item.value[0]), formatDate(item.value[1])]
+      filter.sdate = formatDate(item.value[0])
+      filter.edate = formatDate(item.value[1])
     } else {
       filter[item.key] = item.value
     }
@@ -87,7 +89,7 @@ const reset = () => {
 
 .filter-label {
   color: gray;
-  min-width: 60px;
+  min-width: 75px;
   font-size: 14px;
 }
 
