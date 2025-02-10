@@ -1,30 +1,32 @@
 <template>
-  <template v-if="hasOneShowingChild(item.children, item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && !item.alwaysShow">
-    <el-menu-item class="menu-item" :index="resolvePath(onlyOneChild.path)" v-if="onlyOneChild.meta" @click="handleLink(onlyOneChild)">
-      <svg-icon 
-        :icon="onlyOneChild.meta.icon" 
-        className="side-icon"
-        :className="{'active-icon': route.path == resolvePath(onlyOneChild.path)}"
-        v-if="onlyOneChild.meta.icon"
-      >
-      </svg-icon>
-      <template #title>{{ onlyOneChild.meta.title }}</template>
-    </el-menu-item>
-  </template>
-
-  <el-sub-menu v-else :index="resolvePath(item.path)">
-    <template #title>
-      <svg-icon :icon="item.meta.icon" className="side-icon"></svg-icon>
-      <span>{{ item.meta.title }}</span>
+  <div v-if="!item.hidden">
+    <template v-if="hasOneShowingChild(item.children, item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && !item.alwaysShow">
+      <el-menu-item class="menu-item" :index="resolvePath(onlyOneChild.path)" v-if="onlyOneChild.meta" @click="handleLink(onlyOneChild)">
+        <svg-icon 
+          :icon="onlyOneChild.meta.icon" 
+          className="side-icon"
+          :className="{'active-icon': route.path == resolvePath(onlyOneChild.path)}"
+          v-if="onlyOneChild.meta.icon"
+        >
+        </svg-icon>
+        <template #title>{{ onlyOneChild.meta.title }}</template>
+      </el-menu-item>
     </template>
-    <sidebar-item 
-      v-for="item in item.children" 
-      :key="item.path" 
-      :item="item"
-      :base-path="resolvePath(item.path)"
-    >
-    </sidebar-item>
-  </el-sub-menu>
+
+    <el-sub-menu v-else :index="resolvePath(item.path)">
+      <template #title>
+        <svg-icon :icon="item.meta.icon" className="side-icon"></svg-icon>
+        <span>{{ item.meta.title }}</span>
+      </template>
+      <sidebar-item 
+        v-for="item in item.children" 
+        :key="item.path" 
+        :item="item"
+        :base-path="resolvePath(item.path)"
+      >
+      </sidebar-item>
+    </el-sub-menu>
+  </div>
 </template>
 
 <script setup>

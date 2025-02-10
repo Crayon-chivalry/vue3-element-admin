@@ -2,10 +2,11 @@ import Mock from 'mockjs'
 
 import { dynamicFilter } from './utils/index'
 
-// 订单列表
+// 生成随机数据
+let idCounter = 1;  // ID 计数器
 const data = Mock.mock({
   'list|16': [{
-    id: '@uuid',
+    id: () => idCounter++,
     number: '@integer(1000000000, 9999999999)',
     name: 'HUAWEI Mate 70鸿蒙AI红枫原色影像超可靠玄武架构华为官方旗舰店鸿蒙智能手机新品',
     shopNumber: '@integer(1000000000, 9999999999)',
@@ -20,6 +21,8 @@ const data = Mock.mock({
 data.list.forEach(item => {
   item.totalPrice = item.price * item.num
 })
+
+// 订单列表
 Mock.mock('/api/orderList', 'get', (req) => {
   // 从请求参数中获取分页信息
   const { page = 1, pageSize = 10, filters = {} } = JSON.parse(req.body)
@@ -37,5 +40,17 @@ Mock.mock('/api/orderList', 'get', (req) => {
     page, // 当前页码
     pageSize, // 每页数据量
     data: currentPageData
+  }
+})
+
+
+// 订单详情
+Mock.mock('/api/orderDetails', 'get', (req) => {
+  const { id } = JSON.parse(req.body)
+  const order = data.list.find(item => item.id == id)
+  return {
+    code: 200,
+    message: '获取成功',
+    data: order
   }
 })

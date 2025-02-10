@@ -11,3 +11,13 @@ export function getOrderListAPI(page, pageSize, filters) {
     }
   })
 }
+
+// 订单详情
+export function getOrderDetailsAPI(id) {
+  return request({
+    url: '/orderDetails',
+    data: {
+      id
+    }
+  })
+}

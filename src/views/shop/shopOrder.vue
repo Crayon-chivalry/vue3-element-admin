@@ -41,7 +41,9 @@
           </template>
         </el-table-column>
         <el-table-column label="操作">
-          <el-button type="primary" link>订单详情</el-button>
+          <template #default="scope">
+            <el-button type="primary" link @click="tolink('shop-order-details?id=' + scope.row.id)">订单详情</el-button>
+          </template>
         </el-table-column>
       </el-table>
 
@@ -57,6 +59,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { getOrderListAPI } from '@/api/order'
+import { tolink } from '@/utils/index'
 
 const filterList = [
   {
@@ -137,7 +140,7 @@ const onDelete = () => {
 
 // 获取商品列表
 const getOrderList = async () => {
-  let { data } = await getOrderListAPI(page.value, pageSize.value, filters.value)
+  const { data } = await getOrderListAPI(page.value, pageSize.value, filters.value)
   tableData.value = data.data
   total.value = data.total
 }

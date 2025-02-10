@@ -58,6 +58,15 @@
         "meta": {
           "title": "订单列表"
         }
+      },
+      {
+        "name": "shop-order-details",
+        "path": "shop-order-details",
+        "component": "shop/shopOrderDetails",
+        "hidden": true,
+        "meta": {
+          "title": "订单详情"
+        }
       }
     ]
   }

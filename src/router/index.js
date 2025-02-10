@@ -9,11 +9,12 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 // 设置为 true, 显示根路由
 // alwaysShow: true
 
-// 设置 true 则不会被 <keep-alive> 缓存
-// meta.noCache: true
-
-// 设置 true, 则会固定在 tags-view 中
-// affix: true
+// meta: {
+//   title: 'title',   标题
+//   icon: '',         图标
+//   noCache: false,    <keep-alive> 缓存
+//   affix: false,     是否固定在 tags-view 中
+// }
 
 const routes = [
   {

@@ -28,8 +28,7 @@ const activeMenu = computed(() => {
 })
 
 onMounted(() => {
-  let _roles= store.getters.roles
-  roles.value = _roles.filter(item => !item.hidden)
+  roles.value = store.getters.roles
 })
 </script>
 
