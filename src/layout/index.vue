@@ -1,13 +1,13 @@
 <template>
   <el-container>
     <el-aside class="aside">
-      <sidebar />
+      <sidebar ref="sidebarRef" />
     </el-aside>
 
     <el-container>
       <el-header class="header">
-        <navbar/>
-        <tags-view/>
+        <navbar @collapse-toggle="collapseToggle" />
+        <tags-view />
       </el-header>
 
       <el-main class="main">
@@ -18,10 +18,19 @@
 </template>
 
 <script setup>
-import Sidebar from './components/Sidebar/index.vue'
+import { ref } from 'vue'
+
+import Sidebar from "./components/Sidebar/index.vue";
 import Navbar from "./components/Navbar.vue";
 import TagsView from "./components/TagsView/index.vue";
 import AppMain from "./components/AppMain.vue";
+
+const sidebarRef = ref(null);
+
+// 折叠菜单面板
+const collapseToggle = () => {
+  sidebarRef.value.isCollapse = !sidebarRef.value.isCollapse;
+};
 </script>
 
 <style scoped>
@@ -29,6 +38,7 @@ import AppMain from "./components/AppMain.vue";
   box-sizing: border-box;
   width: auto;
   min-height: 100vh;
+  background-color: #fff;
 }
 
 .header {

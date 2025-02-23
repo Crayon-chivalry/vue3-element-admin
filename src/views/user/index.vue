@@ -119,7 +119,6 @@ const search = (filter) => {
 const getUserList = async () => {
   let { data } = await getUserListAPI(page.value, pageSize.value, filters.value)
   tableData.value = data.data
-  console.log(data)
   total.value = data.total
 }
 

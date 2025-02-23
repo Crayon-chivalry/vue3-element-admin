@@ -5,7 +5,7 @@
 
     <div class="m-block">
       <!-- 操作区 -->
-      <el-button type="primary" @click="">添加</el-button>
+      <el-button type="primary" @click="tolink('shop-goods-publish')">添加</el-button>
       <el-button type="danger" @click="onDelete">删除</el-button>
 
       <!-- 表格 -->
@@ -38,8 +38,11 @@
         </el-table-column>
         <el-table-column prop="date" label="创建时间" />
         <el-table-column label="操作">
-          <el-button type="primary" link>编辑</el-button>
-          <el-button type="danger" link>下架</el-button>
+          <template #default="scope">
+            <el-button type="primary" link>编辑</el-button>
+            <el-button type="danger" link v-if="scope.row.state == 1">下架</el-button>
+            <el-button type="success" link v-if="scope.row.state == 2">上架</el-button>
+          </template>
         </el-table-column>
       </el-table>
 
@@ -58,7 +61,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { getGoodsListAPI } from '@/api/goods'
+import { getGoodsListAPI } from '@/api/shop'
+import { tolink } from '@/utils';
 
 const filterList = [
   {

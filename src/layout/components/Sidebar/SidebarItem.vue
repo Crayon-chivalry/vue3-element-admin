@@ -1,97 +1,50 @@
 <template>
-  <div v-if="!item.hidden">
-    <template v-if="hasOneShowingChild(item.children, item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && !item.alwaysShow">
-      <el-menu-item class="menu-item" :index="resolvePath(onlyOneChild.path)" v-if="onlyOneChild.meta" @click="handleLink(onlyOneChild)">
-        <svg-icon 
-          :icon="onlyOneChild.meta.icon" 
-          className="side-icon"
-          :className="{'active-icon': route.path == resolvePath(onlyOneChild.path)}"
-          v-if="onlyOneChild.meta.icon"
-        >
-        </svg-icon>
-        <template #title>{{ onlyOneChild.meta.title }}</template>
-      </el-menu-item>
-    </template>
+  <el-menu-item :index="item.path" v-if="hasOneShowingChild(item.children) && onlyOneChild">
+    <svg-icon :icon="onlyOneChild.meta.icon" className="side-icon" v-if="onlyOneChild.meta.icon"></svg-icon>
+    <span>{{ onlyOneChild.meta.title }}</span>
+  </el-menu-item>
 
-    <el-sub-menu v-else :index="resolvePath(item.path)">
-      <template #title>
-        <svg-icon :icon="item.meta.icon" className="side-icon"></svg-icon>
-        <span>{{ item.meta.title }}</span>
-      </template>
-      <sidebar-item 
-        v-for="item in item.children" 
-        :key="item.path" 
-        :item="item"
-        :base-path="resolvePath(item.path)"
-      >
-      </sidebar-item>
+  <!-- <el-sub-menu index="1">
+    <template #title>
+      <el-icon><location /></el-icon>
+      <span>Navigator One</span>
+    </template>
+    <el-menu-item-group title="Group One">
+      <el-menu-item index="1-1">item one</el-menu-item>
+      <el-menu-item index="1-2">item two</el-menu-item>
+    </el-menu-item-group>
+    <el-menu-item-group title="Group Two">
+      <el-menu-item index="1-3">item three</el-menu-item>
+    </el-menu-item-group>
+    <el-sub-menu index="1-4">
+      <template #title>item four</template>
+      <el-menu-item index="1-4-1">item one</el-menu-item>
     </el-sub-menu>
-  </div>
+  </el-sub-menu> -->
 </template>
 
 <script setup>
-import { defineProps, ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { resolve } from "@/utils/path"
-import { isExternal } from '@/utils/validate'
+import { ref } from 'vue';
 
 const props = defineProps({
   item: {
     type: Object,
     required: true
-  },
-  basePath: {
-    type: String,
-    default: ""
   }
 })
 
-const router = useRouter()
-const route = useRoute()
 let onlyOneChild = ref(null)
 
-function handleLink(e) {
-  let path = resolvePath(e.path)
-  if(isExternal(path)) {
-    window.open(path)
-  } else {
-    router.push(path)
-  }
-}
-
-// 解析路径
-function resolvePath(routePath) {
-  if (isExternal(routePath)) {
-    return routePath
-  }
-  if (isExternal(props.basePath)) {
-    return props.basePath
-  }
-  return resolve(props.basePath, routePath)
-}
-
-function hasOneShowingChild(children = [], parent) {
-  const showingChildren = children.filter(item => {
-    if (item.hidden) {
-      return false
-    } else {
-      onlyOneChild.value = item
-      return true
-    }
-  })
+// 是否只显示一级菜单 / 父级路由
+const hasOneShowingChild = (children = []) => {
+  const showingChildren = children.filter(item => !item.hidden)
+  console.log(showingChildren)
 
   // 当只有一个子路由器时，默认情况下会显示子路由器
   if (showingChildren.length == 1) {
+    onlyOneChild.value = showingChildren[0]
     return true
   }
-
-  // 如果没有要显示的子路由器，则显示父路由器
-  if (showingChildren.length == 0) {
-    onlyOneChild.value = { ...parent, path: '', noShowingChildren: true }
-    return true
-  }
-
-  return false
 }
 </script>
 
@@ -100,9 +53,5 @@ function hasOneShowingChild(children = [], parent) {
   margin-right: 6px;
   width: 20px;
   height: 20px;
-}
-
-.active-icon {
-  color: var(--main-color);
 }
 </style>

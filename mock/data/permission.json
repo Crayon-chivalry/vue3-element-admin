@@ -52,6 +52,15 @@
         }
       },
       {
+        "name": "shop-goods-publish",
+        "path": "shop-goods-publish",
+        "component": "shop/shopGoodsPublish",
+        "hidden": true,
+        "meta": {
+          "title": "商品发布"
+        }
+      },
+      {
         "name": "shop-order",
         "path": "shop-order",
         "component": "shop/shopOrder",

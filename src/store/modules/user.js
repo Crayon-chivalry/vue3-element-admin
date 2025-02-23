@@ -35,7 +35,7 @@ const actions = {
   reset({ commit }) {
     commit('setUserid', '')
     commit('setToken', '')
-    commit('roles', [])
+    commit('setRoles', [])
   }
 }
 

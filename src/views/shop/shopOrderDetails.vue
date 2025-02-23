@@ -111,7 +111,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { getOrderDetailsAPI } from '@/api/order'
+import { getOrderDetailsAPI } from '@/api/shop'
 
 const route = useRoute()
 const id = route.query.id
@@ -121,7 +121,6 @@ let order = ref(null)
 const getOrder = async () => {
   const { data } = await getOrderDetailsAPI(id)
   order.value = data.data
-  console.log(data)
 }
 
 onMounted(() => {
@@ -164,7 +163,7 @@ onMounted(() => {
 }
 
 .title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
 }
 

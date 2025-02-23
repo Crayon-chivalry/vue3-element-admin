@@ -6,9 +6,6 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 // 当设置 true 的时候该路由不会出现在侧边栏，如401、login等
 // hidden: false
 
-// 设置为 true, 显示根路由
-// alwaysShow: true
-
 // meta: {
 //   title: 'title',   标题
 //   icon: '',         图标

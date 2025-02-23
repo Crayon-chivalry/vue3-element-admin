@@ -5,9 +5,9 @@
         <div class="m-block total-item">
           <div class="total-text">{{ item.text }}</div>
           <div class="mt-md">
-            <el-statistic group-separator="," :precision="2" :value="item.value"></el-statistic>
+            <el-statistic group-separator="," :precision="item.precision" :value="item.value"></el-statistic>
           </div>
-          <img :src="item.img" class="total-icon" />
+          <svg-icon :icon="item.icon" className="total-icon"></svg-icon>
         </div>
       </el-col>
     </el-row>
@@ -40,10 +40,10 @@ import Tools from './components/Tools.vue'
 import Message from './components/Message.vue'
 
 let totalList = [
-  { text: '今日销售额', img: require('@/assets/logo.png'), value: 865400 },
-  { text: '今日销售利润', img: require('@/assets/logo.png'), value: 865400 },
-  { text: '今日订单数', img: require('@/assets/logo.png'), value: 865400 },
-  { text: '今日新增用户', img: require('@/assets/logo.png'), value: 865400 },
+  { text: '今日销售额', icon: 'home-sale', value: 865400, precision: 4 },
+  { text: '今日销售利润', icon: 'home-profit', value: 15420, precision: 4 },
+  { text: '今日订单数', icon: 'home-order', value: 1520, precision: 0 },
+  { text: '今日新增用户', icon: 'home-user', value: 153, precision: 0 },
 ]
 </script>
 
@@ -61,5 +61,6 @@ let totalList = [
   right: 15px;
   top: 15px;
   width: 40px;
+  height: 40px;
 }
 </style>

@@ -58,7 +58,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { getOrderListAPI } from '@/api/order'
+import { getOrderListAPI } from '@/api/shop'
 import { tolink } from '@/utils/index'
 
 const filterList = [

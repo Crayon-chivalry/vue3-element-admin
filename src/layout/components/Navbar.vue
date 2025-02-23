@@ -1,61 +1,70 @@
 <template>
   <div class="nav">
     <div class="nav-row">
-      <div class="icon-wrap fold">
-        <svg-icon icon="fold" className="fold-icon"></svg-icon>
+      <div class="icon-wrap" @click="$emit('collapseToggle')">
+        <svg-icon icon="fold" className="icon"></svg-icon>
       </div>
       <div class="breadcrumb">
         <el-breadcrumb>
-          <el-breadcrumb-item>首页</el-breadcrumb-item>
+          <el-breadcrumb-item>{{ title }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
     </div>
 
     <div class="nav-row">
+      <div class="icon-wrap" @click="reload">
+        <el-icon size="20px"><Refresh /></el-icon>
+      </div>
       <el-tooltip effect="dark" :content="toolTipText" placement="bottom">
         <div class="icon-wrap" @click="onFull">
-          <svg-icon icon="full-screen-close" className="full-icon" v-if="screenState"></svg-icon>
-          <svg-icon icon="full-screen" className="full-icon" v-else></svg-icon>
+          <el-icon size="20px"><FullScreen /></el-icon>
         </div>
       </el-tooltip>
-      <div class="user">
-        <img src="@/assets/image/tx.svg" />
-        <div class="user-name">admin</div>
-      </div>
+      <el-popover placement="bottom-start" trigger="click">
+        <div class="popover">
+          <div class="popover-item">系统设置</div>
+          <div class="popover-item" @click="logout">退出登录</div>
+        </div>
+        <template #reference>
+          <div class="user">
+            <img src="@/assets/image/tx.svg" />
+            <div class="user-name">admin</div>
+          </div>
+        </template>
+      </el-popover>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount, ref, computed } from 'vue'
+import { ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
+import { tolink } from '@/utils'
 import screenfull from 'screenfull'
 
 const screenState = ref(false)
 
-onMounted(() => {
-  init()
-})
+const route = useRoute()
 
-onBeforeUnmount(() => {
-  if (screenfull.isEnabled) {
-    screenfull.off('change', fullChange)
-  }
-})
+const store = useStore()
 
+// 刷新页面
+const reload = () => {
+  location.reload()
+}
+
+// 标题
+const title = computed(() => {
+  return route.meta.title
+}) 
+
+// 全屏按钮文字
 const toolTipText = computed(() => {
   return screenState.value ? '取消全屏' : '全屏'
 })
 
-const init = () => {
-  if (screenfull.isEnabled) {
-    screenfull.on('change', fullChange)
-  }
-}
-
-const fullChange = () => {
-  screenState.value = screenfull.isFullscreen
-}
-
+// 全屏
 const onFull = () => {
   if (!screenfull.isEnabled) {
     ElMessage({
@@ -65,7 +74,16 @@ const onFull = () => {
     return false
   }
   screenfull.toggle()
+  screenState.value = !screenfull.isFullscreen
 }
+
+// 退出登录
+const logout = () => {
+  store.dispatch('user/reset')
+  tolink('/login')
+}
+
+const $emit = defineEmits(['collapseToggle'])
 </script>
 
 <style scoped>
@@ -84,22 +102,12 @@ const onFull = () => {
 }
 
 .icon-wrap {
-  padding: 0 10px;
+  padding: 0 15px;
   height: 100%;
   display: flex;
   align-items: center;
   color: rgb(70, 66, 66);
   cursor: pointer;
-}
-
-.fold {
-  padding: 0 15px;
-}
-
-.fold-icon {
-  width: 20px;
-  height: 20px;
-  color: #000;
 }
 
 .icon-wrap:hover {
@@ -133,8 +141,13 @@ const onFull = () => {
   font-size: 14px;
 }
 
-.full-icon {
-  width: 25px;
-  height: 25px;
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.popover-item {
+  padding: 10px 0;
+  cursor: pointer;
 }
 </style>
