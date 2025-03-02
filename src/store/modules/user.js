@@ -30,6 +30,7 @@ const actions = {
   async getInfo({ commit }) {
     let { data: { data } } = await getUserInfoAPI()
     commit('setRoles', data.permission)
+    commit('setUserid', data.name)
     return data.permission
   },
   reset({ commit }) {

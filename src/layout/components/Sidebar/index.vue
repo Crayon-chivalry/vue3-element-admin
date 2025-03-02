@@ -1,6 +1,6 @@
 <template>
   <el-menu class="menu" router :default-active="activeMenu" :collapse="isCollapse">
-    <sidebar-item v-for="item in rolesList" :key="item.path" :item="item" />
+    <sidebar-item v-for="item in rolesList" :key="item.path" :menu-item="item" :base-path="item.path" />
   </el-menu>
 </template>
 
@@ -20,7 +20,6 @@ let isCollapse = ref(false);
 const rolesList = computed(() => {
   return store.getters.roles;
 });
-console.log(rolesList.value);
 
 const activeMenu = computed(() => {
   let { path } = route

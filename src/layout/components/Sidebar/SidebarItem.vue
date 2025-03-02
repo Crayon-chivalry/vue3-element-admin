@@ -1,50 +1,66 @@
 <template>
-  <el-menu-item :index="item.path" v-if="hasOneShowingChild(item.children) && onlyOneChild">
-    <svg-icon :icon="onlyOneChild.meta.icon" className="side-icon" v-if="onlyOneChild.meta.icon"></svg-icon>
-    <span>{{ onlyOneChild.meta.title }}</span>
-  </el-menu-item>
+  <template v-if="!menuItem.hidden">
+    <el-menu-item :index="resolvePath()" v-if="hasOneShowingChild(menuItem.children, menuItem) && onlyOneChild">
+      <svg-icon :icon="onlyOneChild.meta.icon" className="side-icon" v-if="onlyOneChild.meta.icon"></svg-icon>
+      <template #title>{{ onlyOneChild.meta.title }} {{ menuItem.hidden }}</template>
+    </el-menu-item>
 
-  <!-- <el-sub-menu index="1">
-    <template #title>
-      <el-icon><location /></el-icon>
-      <span>Navigator One</span>
-    </template>
-    <el-menu-item-group title="Group One">
-      <el-menu-item index="1-1">item one</el-menu-item>
-      <el-menu-item index="1-2">item two</el-menu-item>
-    </el-menu-item-group>
-    <el-menu-item-group title="Group Two">
-      <el-menu-item index="1-3">item three</el-menu-item>
-    </el-menu-item-group>
-    <el-sub-menu index="1-4">
-      <template #title>item four</template>
-      <el-menu-item index="1-4-1">item one</el-menu-item>
+      
+
+    <el-sub-menu :index="resolvePath()" v-else>
+      <template #title>
+        <svg-icon :icon="menuItem.meta.icon" className="side-icon"></svg-icon>
+        <span>{{ menuItem.meta.title }}</span>
+      </template>
+      <sidebar-item v-for="item in menuItem.children" :key="item.path" :menu-item="item" :base-path="menuItem.path" />
     </el-sub-menu>
-  </el-sub-menu> -->
+  </template>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 
 const props = defineProps({
-  item: {
+  menuItem: {
     type: Object,
     required: true
+  },
+  basePath: {
+    type: String,
+    default: ""
   }
 })
 
 let onlyOneChild = ref(null)
 
+// 解析路由 path, 对 path 进行特殊处理
+const resolvePath = () => {
+  if(props.menuItem.redirect) {
+    return props.menuItem.redirect
+  }
+  if(onlyOneChild.value?.path) {
+    return `${props.basePath}/${onlyOneChild.value?.path}`
+  }
+  return props.basePath
+}
+
 // 是否只显示一级菜单 / 父级路由
-const hasOneShowingChild = (children = []) => {
+const hasOneShowingChild = (children = [], parent) => {
   const showingChildren = children.filter(item => !item.hidden)
-  console.log(showingChildren)
 
   // 当只有一个子路由器时，默认情况下会显示子路由器
   if (showingChildren.length == 1) {
     onlyOneChild.value = showingChildren[0]
     return true
   }
+
+  // 如果没有要显示的子路由，则显示父路由
+  if(showingChildren.length == 0) {
+    onlyOneChild.value = {...parent}
+    return true
+  }
+
+  return false
 }
 </script>
 

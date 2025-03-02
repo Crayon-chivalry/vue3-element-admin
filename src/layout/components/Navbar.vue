@@ -20,10 +20,16 @@
           <el-icon size="20px"><FullScreen /></el-icon>
         </div>
       </el-tooltip>
-      <el-popover placement="bottom-start" trigger="click">
+      <el-popover placement="bottom-start" trigger="click" width="200">
         <div class="popover">
-          <div class="popover-item">系统设置</div>
-          <div class="popover-item" @click="logout">退出登录</div>
+          <div class="popover-info">
+            <img src="@/assets/image/tx.svg" />
+            <div class="popover-info-name">{{ store.getters.userid }}</div>
+          </div>
+          <div class="popover-cell">
+            <el-button type="primary" plain>个人中心</el-button>
+            <el-button type="danger" plain @click="logout">注销</el-button>
+          </div>
         </div>
         <template #reference>
           <div class="user">
@@ -146,8 +152,22 @@ const $emit = defineEmits(['collapseToggle'])
   height: 20px;
 }
 
-.popover-item {
-  padding: 10px 0;
-  cursor: pointer;
+.popover-info {
+  text-align: center;
+}
+
+.popover-info-name {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.popover-cell {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.popover img {
+  width: 50px;
 }
 </style>
