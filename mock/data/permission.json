@@ -17,6 +17,43 @@
     ]
   },
   {
+    "path": "/auth",
+    "component": "Layout",
+    "meta": {
+      "title": "权限管理",
+      "icon": "auth"
+    },
+    "children": [
+      {
+        "name": "group",
+        "path": "group",
+        "component": "auth/group",
+        "meta": {
+          "title": "角色组管理",
+          "icon": "auth"
+        }
+      },
+      {
+        "name": "admin",
+        "path": "admin",
+        "component": "auth/admin",
+        "meta": {
+          "title": "管理员管理",
+          "icon": "user"
+        }
+      },
+      {
+        "name": "adminLog",
+        "path": "adminLog",
+        "component": "auth/adminLog",
+        "meta": {
+          "title": "管理员日志管理",
+          "icon": "log"
+        }
+      }
+    ]
+  },
+  {
     "path": "/user",
     "component": "Layout",
     "meta": {
@@ -48,7 +85,8 @@
         "path": "index",
         "component": "shop/index",
         "meta": {
-          "title": "商品列表"
+          "title": "商品列表",
+          "icon": "shop"
         }
       },
       {
@@ -65,7 +103,8 @@
         "path": "shop-order",
         "component": "shop/shopOrder",
         "meta": {
-          "title": "订单列表"
+          "title": "订单列表",
+          "icon": "shop-order"
         }
       },
       {
@@ -75,6 +114,62 @@
         "hidden": true,
         "meta": {
           "title": "订单详情"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/routine",
+    "component": "Layout",
+    "meta": {
+      "title": "常规管理",
+      "icon": "routine"
+    },
+    "children": [
+      {
+        "name": "config",
+        "path": "config",
+        "component": "routine/config",
+        "meta": {
+          "title": "系统配置",
+          "icon": "set"
+        }
+      },
+      {
+        "name": "adminInfo",
+        "path": "adminInfo",
+        "component": "routine/adminInfo",
+        "meta": {
+          "title": "个人资料",
+          "icon": "admininfo"
+        }
+      }
+    ]
+  },
+  {
+    "path": "/security",
+    "component": "Layout",
+    "meta": {
+      "title": "数据安全管理",
+      "icon": "security"
+    },
+    "children": [
+      {
+        "name": "dataRecycleLog",
+        "path": "dataRecycleLog",
+        "component": "security/dataRecycleLog",
+        "meta": {
+          "title": "数据回收站",
+          "icon": "data-recycle-log"
+        }
+      },
+      {
+        "name": "sensitiveDataLog",
+        "path": "sensitiveDataLog",
+        "component": "security/sensitiveDataLog",
+        "meta": {
+          "title": "敏感数据修改记录",
+          "icon": "sensitive-data-log"
         }
       }
     ]

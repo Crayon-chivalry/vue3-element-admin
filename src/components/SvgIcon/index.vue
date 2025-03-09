@@ -1,3 +1,4 @@
+<!-- 有时候下载的图标自带颜色则无法修改颜色，需要修改原图标文件的 fill 为 currentColor -->
 <template>
   <svg :class="svgClass" aria-hidden="true" v-on="$attrs">
     <use :xlink:href="iconName"></use>
