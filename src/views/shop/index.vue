@@ -5,7 +5,7 @@
 
     <div class="m-block">
       <!-- 操作区 -->
-      <el-button type="primary" @click="tolink('shop-goods-publish')">添加</el-button>
+      <el-button type="primary" @click="tolink('shop-goods-upsert')">添加</el-button>
       <el-button type="danger" @click="onDelete">删除</el-button>
 
       <!-- 表格 -->

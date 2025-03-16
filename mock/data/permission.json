@@ -34,6 +34,15 @@
         }
       },
       {
+        "name": "group-upsert",
+        "path": "group-upsert",
+        "hidden": true,
+        "component": "auth/groupUpsert",
+        "meta": {
+          "title": "角色管理"
+        }
+      },
+      {
         "name": "admin",
         "path": "admin",
         "component": "auth/admin",
@@ -90,9 +99,9 @@
         }
       },
       {
-        "name": "shop-goods-publish",
-        "path": "shop-goods-publish",
-        "component": "shop/shopGoodsPublish",
+        "name": "shop-goods-upsert",
+        "path": "shop-goods-upsert",
+        "component": "shop/shopGoodsUpsert",
         "hidden": true,
         "meta": {
           "title": "商品发布"
