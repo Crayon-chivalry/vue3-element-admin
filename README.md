@@ -1,19 +1,5 @@
-# vue3-element-admin
+## vue3 + element-plus 后台管理
 
-## Project setup
-```
-npm install
-```
+![image]([https://github.com/Crayon-chivalry/uniapp-music/blob/main/static/git-banner.png](https://github.com/Crayon-chivalry/vue3-element-admin/blob/main/src/assets/git-banner.png))
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+![image]([https://github.com/Crayon-chivalry/uniapp-music/blob/main/static/git-banner.png](https://github.com/Crayon-chivalry/vue3-element-admin/blob/main/src/assets/git-banner2.png))
