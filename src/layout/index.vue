@@ -19,17 +19,25 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useStore } from 'vuex';
 
 import Sidebar from "./components/Sidebar/index.vue";
 import Navbar from "./components/Navbar.vue";
 import TagsView from "./components/TagsView/index.vue";
 import AppMain from "./components/AppMain.vue";
 
+const store = useStore()
+
 const sidebarRef = ref(null);
 
 // 折叠菜单面板
 const collapseToggle = () => {
-  sidebarRef.value.isCollapse = !sidebarRef.value.isCollapse;
+  if(store.getters.mode == 'md') {
+    sidebarRef.value.isCollapse = !sidebarRef.value.isCollapse;
+  } else {
+    sidebarRef.value.isCollapse = false
+    sidebarRef.value.showDrawer = true
+  }
 };
 </script>
 

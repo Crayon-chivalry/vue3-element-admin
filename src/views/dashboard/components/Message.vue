@@ -1,14 +1,10 @@
 <template>
-  <div class="m-block mt-md">
+  <div class="m-block">
     <div>消息动态</div>
     <div class="msg-list">
-      <div class="msg-item" v-for="item in 6" :key="item">
-        <div class="msg-item-row">
-          <el-tag class="mr-sm" type="warning">订单</el-tag>
-          <div>
-            订单号<span class="number">D2155111233</span>已签收
-          </div>
-        </div>
+      <div class="msg-item" v-for="item in 10" :key="item">
+        <el-tag type="warning">订单</el-tag>
+        <div class="msg-content">订单号<span class="number">D2155111233</span>已签收</div>
         <div class="msg-date">03-23 17:23</div>
       </div>
     </div>
@@ -26,6 +22,7 @@
   justify-content: space-between;
   font-size: 12px;
   cursor: pointer;
+  gap: 10px;
 }
 
 .msg-item:first-child {
@@ -33,16 +30,18 @@
 }
 
 .msg-item .number {
-  padding: 0 4px;
   color: var(--main-color);
-}
-
-.msg-item-row {
-  display: flex;
-  align-items: center;
 }
 
 .msg-date {
   color: gray;
+}
+
+.msg-content {
+  flex: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
 }
 </style>

@@ -7,16 +7,17 @@
 </template>
 
 <script setup>
-import { onMounted, ref, markRaw } from 'vue'
+import { onMounted, ref, markRaw, computed, watch } from 'vue'
+import { useStore } from 'vuex';
 import * as echarts from 'echarts';
+
+const store = useStore()
+
+const screenWidth = computed(() => store.getters.screenWidth)
 
 let myChart = ref(null)
 
-onMounted(() => {
-  initChart()
-})
-
-function initChart() {
+const initChart = () => {
   myChart.value = markRaw(echarts.init(document.getElementById('accessChart')));
   let options = {
     color: ['#FF3E50'],
@@ -73,6 +74,14 @@ function initChart() {
   }
   myChart.value.setOption(options);
 }
+
+watch(screenWidth, () => {
+  myChart.value.resize()
+})
+
+onMounted(() => {
+  initChart()
+})
 </script>
 
 <style scoped>

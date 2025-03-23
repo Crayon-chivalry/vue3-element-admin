@@ -2,7 +2,7 @@
   <div>
     <el-row :gutter="20">
       <el-col :xs="24" :sm="12">
-        <div class="m-block">
+        <div class="m-block mb-md">
           <div class="user">
             <img src="@/assets/image/tx.svg" class="tx" />
             <div class="name">admin</div>

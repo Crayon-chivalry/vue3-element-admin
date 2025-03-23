@@ -129,12 +129,14 @@ const closeMenu = () => {
   align-items: center;
   box-sizing: border-box;
   background-color: #fff;
-  /* border-bottom: 1px solid #d8dce5; */
+  border-bottom: 1px solid #e5e7eb;
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
+  overflow-x: auto;
 }
 
 .tags-item {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   position: relative;

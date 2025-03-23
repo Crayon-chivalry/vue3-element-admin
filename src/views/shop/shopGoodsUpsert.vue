@@ -33,17 +33,32 @@
         <!-- 销售信息 -->
         <div class="title">销售信息</div>
         <div class="sku">
-          <div class="sku-item" v-for="item in form.sku">
-            <el-form-item label="规格名称">
-              <el-input v-model="item.name" />
-            </el-form-item>
+          <el-row :gutter="10" class="sku-item" v-for="item in form.sku">
+            <el-col :xs="24" :sm="8">
+              <el-form-item label="规格名称">
+                <el-input v-model="item.name" />
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="8">
+              <el-form-item label="规格单价">
+                <el-input v-model="item.price" />
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="8">
+              <el-form-item label="商品数量">
+                <el-input v-model="item.num" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <!-- <div class="sku-item" v-for="item in form.sku">
+            
             <el-form-item label="规格单价">
               <el-input v-model="item.price" />
             </el-form-item>
             <el-form-item label="商品数量">
               <el-input v-model="item.num" />
             </el-form-item>
-          </div>
+          </div> -->
           <el-button type="primary" plain class="mt-sm" @click="skuAdd"
             >添加规格</el-button
           >

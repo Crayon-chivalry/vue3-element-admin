@@ -2,6 +2,26 @@
   <router-view />
 </template>
 
+<script setup>
+import { onMounted, onUnmounted } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore()
+
+const handler = () => {
+  store.commit('app/setScreenWidth', window.innerWidth)
+}
+
+onMounted(() => {
+  store.commit('app/setScreenWidth', window.innerWidth)
+  window.addEventListener('resize', handler)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handler)
+})
+</script>
+
 <style>
 :root {
   --main-color: #4966DF; /* 主题色 */
@@ -30,6 +50,10 @@ body {
 
 .mt-md {
   margin-top: 15px;
+}
+
+.mb-md {
+  margin-bottom: 15px;
 }
 
 .mt-lg {

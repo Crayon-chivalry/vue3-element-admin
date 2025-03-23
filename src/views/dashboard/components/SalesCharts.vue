@@ -2,7 +2,7 @@
   <div class="m-block">
     <div class="header">
       <div>销售额趋势</div>
-      <div>
+      <div class="date">
         <el-date-picker v-model="date" type="daterange" range-separator="至" start-placeholder="开始日期"
           end-placeholder="结束日期">
         </el-date-picker>
@@ -14,17 +14,18 @@
 </template>
 
 <script setup>
-import { onMounted, ref, markRaw } from 'vue'
+import { onMounted, ref, markRaw, computed, watch } from 'vue'
+import { useStore } from 'vuex';
 import * as echarts from 'echarts';
+
+const store = useStore()
+
+const screenWidth = computed(() => store.getters.screenWidth)
 
 let myChart = ref(null)
 let date = ref("")
 
-onMounted(() => {
-  initChart()
-})
-
-function initChart() {
+const initChart = () => {
   myChart.value = markRaw(echarts.init(document.getElementById('salesCharts')));
   let options = {
     color: ['#80FFA5', '#00DDFF'],
@@ -38,6 +39,7 @@ function initChart() {
       }
     },
     legend: {
+      top: '5%',
       data: ['Line 1', 'Line 2']
     },
     grid: {
@@ -117,6 +119,15 @@ function initChart() {
   }
   myChart.value.setOption(options);
 }
+
+watch(screenWidth, () => {
+  myChart.value.resize()
+})
+
+
+onMounted(() => {
+  initChart()
+})
 </script>
 
 <style scoped>
@@ -127,7 +138,18 @@ function initChart() {
 
 .header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+  .date {
+    margin-top: 10px;
+  }
+
+  .date :deep(.el-date-editor) {
+    width: 250px;
+  }
 }
 </style>

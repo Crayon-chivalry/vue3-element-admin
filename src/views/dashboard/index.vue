@@ -1,32 +1,34 @@
 <template>
   <div>
     <el-row :gutter="15">
-      <el-col :span="6" v-for="(item, index) in totalList" :key="index">
+      <el-col :sm="6" :xs="12" v-for="(item, index) in totalList" :key="index">
         <div class="m-block total-item">
-          <div class="total-text">{{ item.text }}</div>
-          <div class="mt-md">
-            <el-statistic group-separator="," :precision="item.precision" :value="item.value"></el-statistic>
+          <div>
+            <div class="total-text">{{ item.text }}</div>
+            <div class="mt-md">
+              <el-statistic group-separator="," :precision="item.precision" :value="item.value"></el-statistic>
+            </div>
           </div>
           <svg-icon :icon="item.icon" className="total-icon"></svg-icon>
         </div>
       </el-col>
     </el-row>
 
-    <el-row :gutter="15" class="mt-md">
-      <el-col :span="18">
+    <el-row :gutter="15">
+      <el-col :sm="18" :xs="24">
         <sales-charts />
-        <el-row :gutter="15" class="mt-md">
-          <el-col :span="12">
-            <access-charts />
+        <el-row :gutter="15">
+          <el-col :sm="12" :xs="24">
+            <access-charts class="mt-md" />
           </el-col>
-          <el-col :span="12">
-            <turnover-charts />
+          <el-col :sm="12" :xs="24">
+            <turnover-charts class="mt-md mb-md" />
           </el-col>
         </el-row>
       </el-col>
-      <el-col :span="6">
+      <el-col :sm="6" :xs="24">
         <tools />
-        <message />
+        <message class="mt-md" />
       </el-col>
     </el-row>
   </div>
@@ -49,7 +51,9 @@ let totalList = [
 
 <style scoped>
 .total-item {
-  position: relative;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .total-text {
@@ -57,10 +61,13 @@ let totalList = [
 }
 
 .total-icon {
-  position: absolute;
-  right: 15px;
-  top: 15px;
   width: 40px;
   height: 40px;
+}
+
+@media (max-width: 768px) {
+  .total-icon {
+    display: none;
+  }
 }
 </style>

@@ -7,16 +7,17 @@
 </template>
 
 <script setup>
-import { onMounted, ref, markRaw } from 'vue'
+import { onMounted, ref, markRaw, computed, watch } from 'vue'
+import { useStore } from 'vuex';
 import * as echarts from 'echarts';
+
+const store = useStore()
+
+const screenWidth = computed(() => store.getters.screenWidth)
 
 let myChart = ref(null)
 
-onMounted(() => {
-  initChart()
-})
-
-function initChart() {
+const initChart = () => {
   myChart.value = markRaw(echarts.init(document.getElementById('turnoverCharts')));
   let options = {
     tooltip: {
@@ -32,6 +33,7 @@ function initChart() {
         type: 'pie',
         radius: ['40%', '70%'],
         avoidLabelOverlap: false,
+        top: 40,
         itemStyle: {
           borderRadius: 10,
           borderColor: '#fff',
@@ -44,7 +46,7 @@ function initChart() {
         emphasis: {
           label: {
             show: true,
-            fontSize: 40,
+            fontSize: 16,
             fontWeight: 'bold'
           }
         },
@@ -63,6 +65,14 @@ function initChart() {
   }
   myChart.value.setOption(options);
 }
+
+watch(screenWidth, () => {
+  myChart.value.resize()
+})
+
+onMounted(() => {
+  initChart()
+})
 </script>
 
 <style scoped>
